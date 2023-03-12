@@ -12,6 +12,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-20.04
+    environment: Staging
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -55,4 +56,6 @@ jobs:
           user: ${{ secrets.DEPLOY_USER }}
           password: ${{ secrets.DEPLOY_TOKEN }}
           local_dir: "./public"
-          delete: "false"
+          delete: false
+          ftp_ssl_allow: true
+          max_retries: 3
