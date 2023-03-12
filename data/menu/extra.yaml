@@ -1,0 +1,14 @@
+---
+header:
+  - name: Home
+    ref: https://pxlwrk.de
+    icon: gdoc_home
+    external: true
+  - name: GitHub
+    ref: https://github.com/pxlwrk
+    icon: gdoc_github
+    external: true
+  - name: Blog
+    ref: https://blog.pxlwrk.de
+    icon: gdoc_date
+    external: true
