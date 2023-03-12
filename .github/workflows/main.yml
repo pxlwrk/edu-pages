@@ -16,7 +16,7 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - name: Git checkout and update theme
-        uses: actions/checkout@v2
+        uses: actions/checkout
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
@@ -31,7 +31,7 @@ jobs:
           extended: true
 
       - name: Cache Hugo module
-        uses: actions/cache@v2
+        uses: actions/cache
         with:
           path: /tmp/hugo_cache
           key: ${{ runner.os }}-hugomod-${{ hashFiles('**/go.sum') }}
@@ -42,7 +42,7 @@ jobs:
         run: hugo --minify
 
       - name: Archive build result to artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact
         with:
           name: build-result-${{ env.SHORT_SHA }}
           path: |
