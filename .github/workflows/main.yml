@@ -2,7 +2,7 @@ name: Build Hugo Static Website
 
 on:
   push:
-    branches: [ hugo.sumarsono.com ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
