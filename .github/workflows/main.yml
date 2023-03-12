@@ -16,7 +16,7 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - name: Git checkout and update theme
-        uses: actions/checkout
+        uses: actions/checkout@v3
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
@@ -27,11 +27,11 @@ jobs:
       - name: Setup hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: "0.92.2"
+          hugo-version: "0.110.0"
           extended: true
 
       - name: Cache Hugo module
-        uses: actions/cache
+        uses: actions/cache@v3
         with:
           path: /tmp/hugo_cache
           key: ${{ runner.os }}-hugomod-${{ hashFiles('**/go.sum') }}
@@ -42,8 +42,17 @@ jobs:
         run: hugo --minify
 
       - name: Archive build result to artifacts
-        uses: actions/upload-artifact
+        uses: actions/upload-artifact@v3
         with:
           name: build-result-${{ env.SHORT_SHA }}
           path: |
             public
+
+      - name: Deploy to remote server
+        uses: airvzxf/ftp-deployment-action@latest
+        with:
+          server: ${{ secrets.DEPLOY_IP }}
+          user: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_TOKEN }}
+          local_dir: "./public"
+          delete: "false"
